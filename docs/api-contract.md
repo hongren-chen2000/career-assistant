@@ -4,6 +4,7 @@
 
 - `GET /api/health`：健康检查。
 - `POST /api/documents`：创建候选人文档。
+- `GET /api/documents/{id}`：按 ID 读取候选人文档；不存在时返回 `404`。
 - `POST /api/jobs`：创建岗位描述。
 - `POST /api/analyses`：发起岗位匹配分析。
 - `PATCH /api/facts/{id}/review`：确认、修改或拒绝事实。

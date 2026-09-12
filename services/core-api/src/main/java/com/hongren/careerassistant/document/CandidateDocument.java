@@ -1,5 +1,14 @@
 package com.hongren.careerassistant.document;
 
-public class CandidateDocument {
-    
+import java.time.Instant;
+import java.util.UUID;
+
+public record CandidateDocument(
+        UUID id,
+        String title,
+        DocumentType type,
+        String content,
+        Instant createdAt
+        ) {
+
 }
