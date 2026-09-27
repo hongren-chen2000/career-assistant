@@ -4,4 +4,7 @@ spring:
 server:
   port: 8080
 career-assistant:
-  ai-service-base-url: ${AI_SERVICE_BASE_URL:http://localhost:8001}
+  ai-service:
+    base-url: ${AI_SERVICE_BASE_URL:http://localhost:8001}
+    connect-timeout: ${AI_SERVICE_CONNECT_TIMEOUT:2s}
+    read-timeout: ${AI_SERVICE_READ_TIMEOUT:30s}
