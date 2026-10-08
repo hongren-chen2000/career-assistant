@@ -45,13 +45,29 @@ def health() -> dict[str, str]:
 @app.post("/v1/facts/extract", response_model=ExtractFactsResponse)
 def extract_facts(request: ExtractFactsRequest) -> ExtractFactsResponse:
     """A deterministic placeholder used before an external LLM is configured."""
-    text = request.text.strip()
-    first_line = next((line.strip() for line in text.splitlines() if line.strip()), text)
-    start = text.find(first_line)
+    original_text = request.text
+
+    first_line = next(
+        (
+            line.strip()
+            for line in original_text.splitlines()
+            if line.strip()
+        ),
+        original_text.strip(),
+    )
+
+    # EvidenceSpan 必须始终相对于调用方提交的原始文本计算。
+    start = original_text.find(first_line)
+
     fact = CandidateFact(
         fact_type=FactType.EXPERIENCE,
         value=first_line,
-        evidence=EvidenceSpan(source_text=first_line, start=start, end=start + len(first_line)),
+        evidence=EvidenceSpan(
+            source_text=first_line,
+            start=start,
+            end=start + len(first_line),
+        ),
         confidence=0.50,
     )
+
     return ExtractFactsResponse(mode="mock", facts=[fact])
